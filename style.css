@@ -1,4 +1,34 @@
-@import-normalize
+@import "normalize.css";
 
 /* Stylesheet for TOP-library */ 
+
+:root {
+    --navbar-bg: #fdba74;
+    --content-bg: #fff7ed;
+    --main-font-color: #1c1917;
+}
+
+#navigation {
+    background-color: var(--navbar-bg);
+    color: var(--content-bg);
+    padding: 0;
+}
+
+#main {
+    background-color: var(--content-bg);
+    height: 100vw;
+    padding: 0;
+}
+
+#genres {
+    color: var(--main-font-color);
+}
+
+li > h3 {
+    padding: 1rem;
+}
+
+.card {
+    width: 200px;
+}
 
