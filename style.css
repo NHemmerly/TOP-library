@@ -30,5 +30,6 @@ li > h3 {
 
 .card {
     width: 200px;
+    object-fit: cover;
 }
 
