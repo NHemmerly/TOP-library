@@ -8,6 +8,9 @@
     --navbar-bg: #fdba74;
     --content-bg: #fff7ed;
     --main-font-color: #1c1917;
+    --form-color-bg: #fafaf9;
+    --btn-submit: #bef264;
+    --btn-cancel: #fca5a5;
 }
 
 /* Set responsive background color */
@@ -47,6 +50,66 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 1rem;    
+}
+
+/* Pop-up form */
+
+.add-book-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--form-color-bg);
+    border: 3px solid var(--navbar-bg);
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.add-book-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: min(500px, 95vw);
+    height: 500px;
+}
+
+.form-item {
+    display: flex;
+    width: 350px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-item > label {
+    align-self: flex-start;
+}
+
+.form-btn {
+    display: flex;
+    margin: 1rem;
+    width: 350px;
+    justify-content: space-between;
+}
+
+.form-btn > button {
+    border: 2px solid var(--main-font-color);
+}
+
+.form-btn > button:hover {
+    background-color: var(--navbar-bg);
+}
+
+button[type="submit"] {
+    background-color: var(--btn-submit);
+}
+
+button[type="cancel"] {
+    background-color: var(--btn-cancel);
+}
+
+input {
+    width: 350px;
 }
 
 
