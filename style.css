@@ -2,11 +2,15 @@
 
 /* Stylesheet for TOP-library */ 
 
+/* CSS custom properties */
+
 :root {
     --navbar-bg: #fdba74;
     --content-bg: #fff7ed;
     --main-font-color: #1c1917;
 }
+
+/* Set responsive background color */
 
 html, 
 body,
@@ -17,11 +21,15 @@ body,
     padding: 0;
 }
 
+/* Navbar settings */
+
 #navigation {
     background-color: var(--navbar-bg);
     color: var(--content-bg);
     padding: 0;
 }
+
+/* Card library */
 
 .card {
     width: max(200px, 15vw);
