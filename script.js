@@ -9,11 +9,10 @@ const formInformation = document.querySelectorAll("input");
 const bookCards = document.querySelector(".cards");
 
 let myLibrary = [];
-let bookId = 0;
 
 //Book Constructor
 function Book(title, author, pages, genre, progress) {
-  this.id = bookId++;
+  this.id = undefined;
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -39,8 +38,7 @@ function addBookToLibrary(e) {
   newBook.prototype = Object.create(Book.prototype);
 
   myLibrary.push(newBook);
-
-  console.log(newBook.title);
+  newBook.id = myLibrary.indexOf(newBook);
 
   displayBooks();
   form.reset();
@@ -83,21 +81,14 @@ function createBookElement(book, bookId) {
 }
 
 //Creates an array of all cards that represent books
-function checkIds () {
-  const allBooks = document.querySelectorAll(".card");
-  let cardIds = [].slice.call(allBooks)
-  .map(function (el) {return parseInt(el.id);});
-  return cardIds;
-}
 
 function displayBooks () {
-  let ids = checkIds();
+  bookCards.replaceChildren();
   for (const book of myLibrary){
-    if (!(ids.includes(book.id))) {
+    book.id = myLibrary.indexOf(book);
       createBookElement(book, book.id);
     }
   }
-}
 
 //Functions for closing and opening forms
 
@@ -113,9 +104,11 @@ function closeForm() {
 
 function deleteCard(e) {
   let deleteId = e.target.id;
-  const card = document.getElementById(`${deleteId}`)
-
+  const card = document.getElementById(`${deleteId}`);
+  myLibrary.splice(deleteId, 1);
   bookCards.removeChild(card);
+  displayBooks();
+  console.log(myLibrary);
 }
 
 const addBook = document.querySelector(".add-book");
