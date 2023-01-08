@@ -62,7 +62,9 @@ function createBookElement(book, bookId) {
   const bookProgress = document.createElement('li');
   const deleteList = document.createElement('li');
   const deleteButton = document.createElement('button');
+  deleteButton.innerText += "Delete";
   deleteButton.className = ('delete-card');
+  deleteButton.id = (`${bookId}`);
   bookTitle.innerText += `Title: ${book.title}`;
   bookAuthor.innerText += `Author: ${book.author}`;
   bookPages.innerText += `Pages: ${book.pages}`;
@@ -76,6 +78,8 @@ function createBookElement(book, bookId) {
   bookPropList.appendChild(bookProgress);
   bookPropList.appendChild(deleteList);
   deleteList.appendChild(deleteButton);
+  const deleteElement = document.querySelectorAll(".delete-card");
+  deleteElement.forEach(del => del.addEventListener('click', deleteCard));
 }
 
 //Creates an array of all cards that represent books
@@ -107,7 +111,15 @@ function closeForm() {
   dim.style.display = "none";
 }
 
+function deleteCard(e) {
+  let deleteId = e.target.id;
+  const card = document.getElementById(`${deleteId}`)
+
+  bookCards.removeChild(card);
+}
+
 const addBook = document.querySelector(".add-book");
 addBook.addEventListener("click", openForm);
 cancelBookForm.addEventListener("click", closeForm);
 submitBookForm.addEventListener("click", addBookToLibrary);
+

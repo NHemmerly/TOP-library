@@ -5,6 +5,7 @@
 /* CSS custom properties */
 
 :root {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   --navbar-bg: #fdba74;
   --content-bg: #fff7ed;
   --main-font-color: #1c1917;
@@ -24,6 +25,16 @@ body,
   padding: 0;
 }
 
+/* Font Settings */
+
+li, button {
+  font-weight: 600;
+}
+
+h3 {
+  padding: 1rem;
+}
+
 /* Navbar settings */
 
 #navigation {
@@ -35,8 +46,8 @@ body,
 /* Card library */
 
 .card {
-  width: max(200px, 15vw);
-  padding: 20px 0px 20px 0px;
+  width: max(300px, 15vw);
+  padding: 30px 10px 30px 10px;
 }
 
 .cards {
@@ -50,6 +61,17 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.delete-card {
+  background-color: var(--navbar-bg);
+  width: 100px;
+  border: 2px solid var(--main-font-color);
+  border-radius: 12px;
+}
+
+.delete-card:hover {
+  background-color: var(--btn-cancel);
 }
 
 /* Pop-up form */
