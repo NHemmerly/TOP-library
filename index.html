@@ -28,32 +28,32 @@
 
                 <div class="form-item">
                     <label for="title">Title:</label>
-                    <input type="text" placeholder="Enter Title" name="title" required>
+                    <input type="text" placeholder="Enter Title" name="title" id="title" required>
                 </div>
 
                 <div class="form-item">
                     <label for="author">Author:</label>
-                    <input type="text" placeholder="Enter Author" name="author" required>
+                    <input type="text" placeholder="Enter Author" name="author" id="author" required>
                 </div>
 
                 <div class="form-item">
                     <label for="pages">Pages:</label>
-                    <input type="number" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Total Number of Pages" name="pages" required>
+                    <input type="number" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Total Number of Pages" name="pages" id="pages"required>
                 </div>
 
                 <div class="form-item">
                     <label for="genre">Genre:</label>
-                    <input type="text" placeholder="Enter Genre (optional)" name="genre">
+                    <input type="text" placeholder="Enter Genre (optional)" name="genre" id="genre">
                 </div>
                 
                 <div class="form-item">
                     <label for="progress">Progress: </label>
-                    <input type="number" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Final Page # for Completed Books">
+                    <input type="number" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Final Page # for Completed Books" id="progress">
                 </div>
 
                 <div class="form-btn">
                     <button type="cancel" id='cancel' class="btn">Cancel</button>
-                    <button type="submit" class="btn">Add Book</button>
+                    <button type="submit" id='submit' class="btn">Add Book</button>
                 </div>
             </form>
         </div>
