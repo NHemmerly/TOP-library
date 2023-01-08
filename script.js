@@ -17,8 +17,10 @@ function Book(title, author, pages, genre, progress) {
 }
 
 function addBookToLibrary() {
-  let infoArray = Array.from(formInformation).reduce((acc, input) => 
-    ({...acc, [input.id]: input.value }), {});
+  let infoArray = Array.from(formInformation).reduce(
+    (acc, input) => ({ ...acc, [input.id]: input.value }),
+    {}
+  );
 
   let title = infoArray.title;
   let author = infoArray.author;
@@ -36,17 +38,19 @@ function addBookToLibrary() {
   closeForm();
 }
 
+//Functions for closing and opening forms
+
 function openForm() {
-    addBookForm.style.display = 'block';
-    dim.style.display = 'block';
+  addBookForm.style.display = "block";
+  dim.style.display = "block";
 }
 
 function closeForm() {
-    addBookForm.style.display = 'none';
-    dim.style.display = 'none';
+  addBookForm.style.display = "none";
+  dim.style.display = "none";
 }
 
 const addBook = document.querySelector(".add-book");
-addBook.addEventListener('click', openForm);
-cancelBookForm.addEventListener('click', closeForm);
-submitBookForm.addEventListener('click', addBookToLibrary);
+addBook.addEventListener("click", openForm);
+cancelBookForm.addEventListener("click", closeForm);
+submitBookForm.addEventListener("click", addBookToLibrary);
