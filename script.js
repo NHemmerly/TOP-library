@@ -1,6 +1,7 @@
 // Javascript for TOP-library
 
 const addBookForm = document.querySelector(".add-book-form");
+const form = document.querySelector(".add-book-container");
 const cancelBookForm = document.getElementById("cancel");
 const submitBookForm = document.getElementById("submit");
 const dim = document.querySelector(".frost");
@@ -42,6 +43,7 @@ function addBookToLibrary(e) {
   console.log(newBook.title);
 
   displayBooks();
+  form.reset();
   closeForm();
 }
 
