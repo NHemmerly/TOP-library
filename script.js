@@ -10,6 +10,7 @@ const bookCards = document.querySelector(".cards");
 let myLibrary = [];
 let bookId = 0;
 
+//Book Constructor
 function Book(title, author, pages, genre, progress) {
   this.id = bookId++;
   this.title = title;
@@ -19,7 +20,9 @@ function Book(title, author, pages, genre, progress) {
   this.progress = progress;
 }
 
-function addBookToLibrary() {
+//Create new books using user input and push it to library 
+function addBookToLibrary(e) {
+  e.preventDefault();
   let infoArray = Array.from(formInformation).reduce(
     (acc, input) => ({ ...acc, [input.id]: input.value }),
     {}
@@ -42,6 +45,7 @@ function addBookToLibrary() {
   closeForm();
 }
 
+//Creates DOM element for each new book 
 function createBookElement(book, bookId) {
   const newBookCard = document.createElement('div');
   const bookPropList = document.createElement('ul');
@@ -72,10 +76,21 @@ function createBookElement(book, bookId) {
   deleteList.appendChild(deleteButton);
 }
 
+//Creates an array of all cards that represent books
+function checkIds () {
+  const allBooks = document.querySelectorAll(".card");
+  let cardIds = [].slice.call(allBooks)
+  .map(function (el) {return parseInt(el.id);});
+  return cardIds;
+}
+
 function displayBooks () {
-  myLibrary.forEach((book) => {
-    createBookElement(book, book.id);
-  })
+  let ids = checkIds();
+  for (const book of myLibrary){
+    if (!(ids.includes(book.id))) {
+      createBookElement(book, book.id);
+    }
+  }
 }
 
 //Functions for closing and opening forms
