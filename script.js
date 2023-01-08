@@ -5,10 +5,13 @@ const cancelBookForm = document.getElementById("cancel");
 const submitBookForm = document.getElementById("submit");
 const dim = document.querySelector(".frost");
 const formInformation = document.querySelectorAll("input");
+const bookCards = document.querySelector(".cards");
 
 let myLibrary = [];
+let bookId = 0;
 
 function Book(title, author, pages, genre, progress) {
+  this.id = bookId++;
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -35,7 +38,44 @@ function addBookToLibrary() {
 
   console.log(newBook.title);
 
+  displayBooks();
   closeForm();
+}
+
+function createBookElement(book, bookId) {
+  const newBookCard = document.createElement('div');
+  const bookPropList = document.createElement('ul');
+  newBookCard.className = ('card');
+  newBookCard.id = (`${bookId}`);
+  bookCards.appendChild(newBookCard);
+  newBookCard.appendChild(bookPropList);
+  const bookTitle = document.createElement('li');
+  const bookAuthor = document.createElement('li');
+  const bookPages = document.createElement('li');
+  const bookGenre = document.createElement('li');
+  const bookProgress = document.createElement('li');
+  const deleteList = document.createElement('li');
+  const deleteButton = document.createElement('button');
+  deleteButton.className = ('delete-card');
+  bookTitle.innerText += `Title: ${book.title}`;
+  bookAuthor.innerText += `Author: ${book.author}`;
+  bookPages.innerText += `Pages: ${book.pages}`;
+  bookGenre.innerText += `Genre: ${book.genre}`;
+  bookProgress.innerText += `Progress: ${book.progress}`;
+
+  bookPropList.appendChild(bookTitle);
+  bookPropList.appendChild(bookAuthor);
+  bookPropList.appendChild(bookPages);
+  bookPropList.appendChild(bookGenre);
+  bookPropList.appendChild(bookProgress);
+  bookPropList.appendChild(deleteList);
+  deleteList.appendChild(deleteButton);
+}
+
+function displayBooks () {
+  myLibrary.forEach((book) => {
+    createBookElement(book, book.id);
+  })
 }
 
 //Functions for closing and opening forms
