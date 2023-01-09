@@ -21,12 +21,12 @@ function Book(title, author, pages, genre, progress) {
 
 //Function for additional form validations
 function validateForm (e) {
-  progress.setAttribute("max", parseInt(pages.value));
   let validationFails = 0;
+  progress.setAttribute("max", parseInt(pages.value));
   formInformation.forEach(input => {
     if (input.value === '' && input.id != 'genre') {
       validationFails++;
-    } else if (progress.value > pages.value) {
+    } else if (parseInt(progress.value) > parseInt(pages.value)) {
       validationFails++;
     }
   })
@@ -86,9 +86,15 @@ function addBookToLibrary() {
     newBookCard.appendChild(bookPropList);
     const bookTitle = document.createElement('li');
     const bookAuthor = document.createElement('li');
-    const bookPages = document.createElement('li');
     const bookGenre = document.createElement('li');
+    const bookPages = document.createElement('li');
     const bookProgress = document.createElement('li');
+    const progressBar = document.createElement('progress')
+    progressBar.className = 'progress-bar';
+    progressBar.setAttribute("value", parseInt(progress.value));
+    progressBar.setAttribute("max", parseInt(pages.value));
+    const progressLabel = document.createElement('label');
+    progressLabel.innerText += `Progress: ${progress.value} / ${pages.value}`;
     const deleteList = document.createElement('li');
     const deleteButton = document.createElement('button');
     deleteButton.innerText += "Delete";
@@ -98,13 +104,14 @@ function addBookToLibrary() {
     bookAuthor.innerText += `Author: ${book.author}`;
     bookGenre.innerText += `Genre: ${book.genre}`;
     bookPages.innerText += `Pages: ${book.pages}`;
-    bookProgress.innerText += `Progress: ${book.progress}`;
     
     bookPropList.appendChild(bookTitle);
     bookPropList.appendChild(bookAuthor);
     bookPropList.appendChild(bookPages);
     bookPropList.appendChild(bookGenre);
     bookPropList.appendChild(bookProgress);
+    bookProgress.appendChild(progressLabel);
+    bookProgress.appendChild(progressBar);
     bookPropList.appendChild(deleteList);
     deleteList.appendChild(deleteButton);
     const deleteElement = document.querySelectorAll(".delete-card");
@@ -132,6 +139,7 @@ function openForm() {
 function closeForm() {
   addBookForm.style.display = "none";
   dim.style.display = "none";
+  form.reset();
 }
 
 function deleteCard(e) {
