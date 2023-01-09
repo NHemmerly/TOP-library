@@ -27,7 +27,7 @@ body,
 
 /* Font Settings */
 
-li, button {
+li, button, h1 {
   font-weight: 600;
 }
 
@@ -92,6 +92,14 @@ ul {
 
 .delete-card:hover {
   background-color: var(--btn-cancel);
+}
+
+ul > li {
+  width: 200px;
+  height: 40px;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 /* Pop-up form */
