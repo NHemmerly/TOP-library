@@ -21,10 +21,27 @@ function Book(title, author, pages, genre, progress) {
 }
 
 //Function for additional form validations
+function validateForm (e) {
+  let validationFails = 0;
+  formInformation.forEach(input => {
+    if (input.value === '' && input.id != 'genre') {
+      validationFails++;
+    } 
+  })
+  
+  if (validationFails === 0) {
+    e.preventDefault();
+    addBookToLibrary();
+  }
+}
+
+function addRequiredText () {
+  const requiredText = document.getElementById("required");
+  requiredText.innerText = "*Please fill out required fields.";
+}
 
 //Create new books using user input and push it to library 
-function addBookToLibrary(e) {
-  e.preventDefault();
+function addBookToLibrary() {
   let infoArray = Array.from(formInformation).reduce(
     (acc, input) => ({ ...acc, [input.id]: input.value }),
     {}
@@ -35,6 +52,10 @@ function addBookToLibrary(e) {
   let pages = infoArray.pages;
   let genre = infoArray.genre;
   let progress = infoArray.progress;
+
+  if (genre === '') {
+    genre = 'N/A';
+  }
 
   const newBook = new Book(title, author, pages, genre, progress);
   newBook.prototype = Object.create(Book.prototype);
@@ -116,5 +137,5 @@ function deleteCard(e) {
 const addBook = document.querySelector(".add-book");
 addBook.addEventListener("click", openForm);
 cancelBookForm.addEventListener("click", closeForm);
-submitBookForm.addEventListener("click", addBookToLibrary);
+submitBookForm.addEventListener("click", validateForm);
 

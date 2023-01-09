@@ -127,6 +127,7 @@ ul > li {
 
 .form-item {
   display: flex;
+  height: 54px;
   width: 350px;
   flex-direction: column;
   align-items: center;
@@ -170,4 +171,8 @@ input {
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+input[id="progress"] {
+  display: hidden;
 }

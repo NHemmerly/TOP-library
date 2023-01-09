@@ -25,7 +25,7 @@
         <div class="add-book-form" id="add-book-form">
             <form action="#" class="add-book-container">
                 <h3>Add Book</h3>
-
+                <p id="required"></p>
                 <div class="form-item">
                     <label for="title">Title:</label>
                     <input type="text" placeholder="Enter Title" name="title" id="title" minlength="1" maxlength="40" required>
@@ -35,15 +35,15 @@
                     <label for="author">Author:</label>
                     <input type="text" placeholder="Enter Author" name="author" id="author" minlength="1" maxlength="40" required>
                 </div>
+                
+                <div class="form-item">
+                    <label for="genre">Genre:</label>
+                    <input type="text" placeholder="Enter Genre (optional)" name="genre" id="genre" minlength="1" maxlength="40">
+                </div>
 
                 <div class="form-item">
                     <label for="pages">Pages:</label>
                     <input type="number" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Total Number of Pages" name="pages" id="pages"required>
-                </div>
-
-                <div class="form-item">
-                    <label for="genre">Genre:</label>
-                    <input type="text" placeholder="Enter Genre (optional)" name="genre" id="genre" minlength="1" maxlength="40">
                 </div>
                 
                 <div class="form-item">
