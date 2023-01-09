@@ -20,6 +20,8 @@ function Book(title, author, pages, genre, progress) {
   this.progress = progress;
 }
 
+//Function for additional form validations
+
 //Create new books using user input and push it to library 
 function addBookToLibrary(e) {
   e.preventDefault();
