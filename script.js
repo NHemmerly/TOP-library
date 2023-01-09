@@ -4,7 +4,6 @@ const addBookForm = document.querySelector(".add-book-form");
 const form = document.querySelector(".add-book-container");
 const cancelBookForm = document.getElementById("cancel");
 const submitBookForm = document.getElementById("submit");
-const dim = document.querySelector(".frost");
 const formInformation = document.querySelectorAll("input");
 const bookCards = document.querySelector(".cards");
 
@@ -22,11 +21,14 @@ function Book(title, author, pages, genre, progress) {
 
 //Function for additional form validations
 function validateForm (e) {
+  progress.setAttribute("max", parseInt(pages.value));
   let validationFails = 0;
   formInformation.forEach(input => {
     if (input.value === '' && input.id != 'genre') {
       validationFails++;
-    } 
+    } else if (progress.value > pages.value) {
+      validationFails++;
+    }
   })
   
   if (validationFails === 0) {
@@ -40,81 +42,88 @@ function addRequiredText () {
   requiredText.innerText = "*Please fill out required fields.";
 }
 
+//Function for setting the max input of progress to the value of pages
+const progress = document.getElementById("progress");
+const pages = document.getElementById("pages");
+
+
+
 //Create new books using user input and push it to library 
 function addBookToLibrary() {
   let infoArray = Array.from(formInformation).reduce(
     (acc, input) => ({ ...acc, [input.id]: input.value }),
     {}
-  );
-
-  let title = infoArray.title;
-  let author = infoArray.author;
-  let pages = infoArray.pages;
-  let genre = infoArray.genre;
-  let progress = infoArray.progress;
-
-  if (genre === '') {
-    genre = 'N/A';
+    );
+    
+    let title = infoArray.title;
+    let author = infoArray.author;
+    let pages = infoArray.pages;
+    let genre = infoArray.genre;
+    let progress = infoArray.progress;
+    
+    if (genre === '') {
+      genre = 'N/A';
+    }
+    
+    const newBook = new Book(title, author, pages, genre, progress);
+    newBook.prototype = Object.create(Book.prototype);
+    
+    myLibrary.push(newBook);
+    newBook.id = myLibrary.indexOf(newBook);
+    
+    displayBooks();
+    form.reset();
+    closeForm();
   }
-
-  const newBook = new Book(title, author, pages, genre, progress);
-  newBook.prototype = Object.create(Book.prototype);
-
-  myLibrary.push(newBook);
-  newBook.id = myLibrary.indexOf(newBook);
-
-  displayBooks();
-  form.reset();
-  closeForm();
-}
-
-//Creates DOM element for each new book 
-function createBookElement(book, bookId) {
-  const newBookCard = document.createElement('div');
-  const bookPropList = document.createElement('ul');
-  newBookCard.className = ('card');
-  newBookCard.id = (`${bookId}`);
-  bookCards.appendChild(newBookCard);
-  newBookCard.appendChild(bookPropList);
-  const bookTitle = document.createElement('li');
-  const bookAuthor = document.createElement('li');
-  const bookPages = document.createElement('li');
-  const bookGenre = document.createElement('li');
-  const bookProgress = document.createElement('li');
-  const deleteList = document.createElement('li');
-  const deleteButton = document.createElement('button');
-  deleteButton.innerText += "Delete";
-  deleteButton.className = ('delete-card');
-  deleteButton.id = (`${bookId}`);
-  bookTitle.innerText += `Title: ${book.title}`;
-  bookAuthor.innerText += `Author: ${book.author}`;
-  bookPages.innerText += `Pages: ${book.pages}`;
-  bookGenre.innerText += `Genre: ${book.genre}`;
-  bookProgress.innerText += `Progress: ${book.progress}`;
-
-  bookPropList.appendChild(bookTitle);
-  bookPropList.appendChild(bookAuthor);
-  bookPropList.appendChild(bookPages);
-  bookPropList.appendChild(bookGenre);
-  bookPropList.appendChild(bookProgress);
-  bookPropList.appendChild(deleteList);
-  deleteList.appendChild(deleteButton);
-  const deleteElement = document.querySelectorAll(".delete-card");
-  deleteElement.forEach(del => del.addEventListener('click', deleteCard));
-}
-
-//Creates an array of all cards that represent books
-
-function displayBooks () {
-  bookCards.replaceChildren();
-  for (const book of myLibrary){
-    book.id = myLibrary.indexOf(book);
+  
+  //Creates DOM element for each new book 
+  function createBookElement(book, bookId) {
+    const newBookCard = document.createElement('div');
+    const bookPropList = document.createElement('ul');
+    newBookCard.className = ('card');
+    newBookCard.id = (`${bookId}`);
+    bookCards.appendChild(newBookCard);
+    newBookCard.appendChild(bookPropList);
+    const bookTitle = document.createElement('li');
+    const bookAuthor = document.createElement('li');
+    const bookPages = document.createElement('li');
+    const bookGenre = document.createElement('li');
+    const bookProgress = document.createElement('li');
+    const deleteList = document.createElement('li');
+    const deleteButton = document.createElement('button');
+    deleteButton.innerText += "Delete";
+    deleteButton.className = ('delete-card');
+    deleteButton.id = (`${bookId}`);
+    bookTitle.innerText += `Title: ${book.title}`;
+    bookAuthor.innerText += `Author: ${book.author}`;
+    bookGenre.innerText += `Genre: ${book.genre}`;
+    bookPages.innerText += `Pages: ${book.pages}`;
+    bookProgress.innerText += `Progress: ${book.progress}`;
+    
+    bookPropList.appendChild(bookTitle);
+    bookPropList.appendChild(bookAuthor);
+    bookPropList.appendChild(bookPages);
+    bookPropList.appendChild(bookGenre);
+    bookPropList.appendChild(bookProgress);
+    bookPropList.appendChild(deleteList);
+    deleteList.appendChild(deleteButton);
+    const deleteElement = document.querySelectorAll(".delete-card");
+    deleteElement.forEach(del => del.addEventListener('click', deleteCard));
+  }
+  
+  //Creates an array of all cards that represent books
+  
+  function displayBooks () {
+    bookCards.replaceChildren();
+    for (const book of myLibrary){
+      book.id = myLibrary.indexOf(book);
       createBookElement(book, book.id);
     }
   }
-
-//Functions for closing and opening forms
-
+  
+  //Functions for closing and opening forms
+const dim = document.querySelector(".frost");
+  
 function openForm() {
   addBookForm.style.display = "block";
   dim.style.display = "block";
