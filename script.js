@@ -91,10 +91,10 @@ function addBookToLibrary() {
     const bookProgress = document.createElement('li');
     const progressBar = document.createElement('progress')
     progressBar.className = 'progress-bar';
-    progressBar.setAttribute("value", parseInt(progress.value));
-    progressBar.setAttribute("max", parseInt(pages.value));
+    progressBar.setAttribute("value", parseInt(book.progress));
+    progressBar.setAttribute("max", parseInt(book.pages));
     const progressLabel = document.createElement('label');
-    progressLabel.innerText += `Progress: ${progress.value} / ${pages.value}`;
+    progressLabel.innerText += `Progress: ${book.progress} / ${book.pages}`;
     const deleteList = document.createElement('li');
     const deleteButton = document.createElement('button');
     deleteButton.innerText += "Delete";
