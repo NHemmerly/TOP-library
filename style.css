@@ -212,3 +212,9 @@ input[id="progress"] {
   align-items: center;
   height: 100px;
 }
+
+.edit-form-div > h3 {
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+}

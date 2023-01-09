@@ -2,7 +2,7 @@
 
 const addBookForm = document.querySelector(".add-book-form");
 const form = document.querySelector(".add-book-container");
-const cancelBookForm = document.getElementById("cancel");
+const cancelBookForm = document.querySelectorAll(".btn-cancel");
 const submitBookForm = document.getElementById("submit");
 const formInformation = document.querySelectorAll(".new-book");
 const bookCards = document.querySelector(".cards");
@@ -65,8 +65,6 @@ function addBookToLibrary() {
     newBook.id = myLibrary.indexOf(newBook);
     
     displayBooks();
-    form.reset();
-    closeForm();
   }
   
   //Creates DOM element for each new book 
@@ -126,6 +124,7 @@ function addBookToLibrary() {
       book.id = myLibrary.indexOf(book);
       createBookElement(book, book.id);
     }
+    closeAddForm();
   }
   
   //Functions for closing and opening forms
@@ -137,7 +136,14 @@ function openForm(e) {
   dim.style.display = "block";
 }
 
-function closeForm() {
+function closeForm(e) {
+  const closeForm = document.getElementById(e.target.id);
+  closeForm.style.display = "none";
+  dim.style.display = "none";
+  form.reset();
+}
+
+function closeAddForm(){
   addBookForm.style.display = "none";
   dim.style.display = "none";
   form.reset();
@@ -160,6 +166,6 @@ function editCard(e) {
 
 const addBook = document.querySelector(".add-book");
 addBook.addEventListener("click", openForm);
-cancelBookForm.addEventListener("click", closeForm);
+cancelBookForm.forEach(btn => btn.addEventListener("click", closeForm));
 submitBookForm.addEventListener("click", validateForm);
 
