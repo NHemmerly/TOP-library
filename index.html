@@ -14,49 +14,62 @@
     <title>Library Share</title>
 </head>
 <body>
+    <div class="add-book-form" id="add">
+        <form action="#" class="add-book-container">
+            <h3>Add Book</h3>
+            <div class="form-item">
+                <label for="title">Title:</label>
+                <input type="text" class="new-book" placeholder="Enter Title" name="title" id="title" minlength="1" maxlength="40" required>
+            </div>
+    
+            <div class="form-item">
+                <label for="author">Author:</label>
+                <input type="text" class="new-book" placeholder="Enter Author" name="author" id="author" minlength="1" maxlength="40" required>
+            </div>
+            
+            <div class="form-item">
+                <label for="genre">Genre:</label>
+                <input type="text" class="new-book" placeholder="Enter Genre (optional)" name="genre" id="genre" minlength="1" maxlength="40">
+            </div>
+    
+            <div class="form-item">
+                <label for="pages">Pages:</label>
+                <input type="number" class="new-book" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Total Number of Pages" name="pages" id="pages"required>
+            </div>
+            
+            <div class="form-item">
+                <label for="progress">Progress: </label>
+                <input type="number" class="new-book" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Final Page # for Completed Books" name="progress" id="progress">
+            </div>
+            
+            <div class="form-btn">
+                <button type="cancel" id='cancel' class="btn">Cancel</button>
+                <button type="submit" id='submit' class="btn">Add Book</button>
+            </div>
+        </form>
+    </div>
+    <div class="edit-form-div" id="edit">
+        <h3>Update Progress</h3>
+        <form action="#" class="edit-form">
+            <div class="form-item">
+                <label for="new-progress">New Progress: </label>
+                <input type="number" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter your new current page #" name="new-progress" id="new-progress"> 
+            </div>
+
+            <div class="form-btn">
+                <button type="cancel" id='cancel' class="btn">Cancel</button>
+                <button type="submit" class="btn" id="update">Update</button>
+            </div>
+        </form>
+    </div>
     <div class="frost"></div>
     <div id="main" class="container-fluid">
         <nav id="navigation" class="navbar navbar-expand-lg" role="navigation">
             <div class="container-fluid">
                 <h1>Library Share</h1>
-                <button class="add-book">+</button>
+                <button class="add-book" id="add">+</button>
             </div>
         </nav>
-        <div class="add-book-form" id="add-book-form">
-            <form action="#" class="add-book-container">
-                <h3>Add Book</h3>
-                <p id="required"></p>
-                <div class="form-item">
-                    <label for="title">Title:</label>
-                    <input type="text" placeholder="Enter Title" name="title" id="title" minlength="1" maxlength="40" required>
-                </div>
-
-                <div class="form-item">
-                    <label for="author">Author:</label>
-                    <input type="text" placeholder="Enter Author" name="author" id="author" minlength="1" maxlength="40" required>
-                </div>
-                
-                <div class="form-item">
-                    <label for="genre">Genre:</label>
-                    <input type="text" placeholder="Enter Genre (optional)" name="genre" id="genre" minlength="1" maxlength="40">
-                </div>
-
-                <div class="form-item">
-                    <label for="pages">Pages:</label>
-                    <input type="number" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Total Number of Pages" name="pages" id="pages"required>
-                </div>
-                
-                <div class="form-item">
-                    <label for="progress">Progress: </label>
-                    <input type="number" min="0" max="10000" oninput="this.value = Math.abs(this.value)" placeholder="Enter the Final Page # for Completed Books" name="progress" id="progress">
-                </div>
-
-                <div class="form-btn">
-                    <button type="cancel" id='cancel' class="btn">Cancel</button>
-                    <button type="submit" id='submit' class="btn">Add Book</button>
-                </div>
-            </form>
-        </div>
 
         <div class="library container-fluid">
             <h3>Library</h3>

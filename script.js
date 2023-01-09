@@ -4,8 +4,11 @@ const addBookForm = document.querySelector(".add-book-form");
 const form = document.querySelector(".add-book-container");
 const cancelBookForm = document.getElementById("cancel");
 const submitBookForm = document.getElementById("submit");
-const formInformation = document.querySelectorAll("input");
+const formInformation = document.querySelectorAll(".new-book");
 const bookCards = document.querySelector(".cards");
+
+const progress = document.getElementById("progress");
+const pages = document.getElementById("pages");
 
 let myLibrary = [];
 
@@ -17,6 +20,7 @@ function Book(title, author, pages, genre, progress) {
   this.pages = pages;
   this.genre = genre;
   this.progress = progress;
+  this.completed = false;
 }
 
 //Function for additional form validations
@@ -36,17 +40,6 @@ function validateForm (e) {
     addBookToLibrary();
   }
 }
-
-function addRequiredText () {
-  const requiredText = document.getElementById("required");
-  requiredText.innerText = "*Please fill out required fields.";
-}
-
-//Function for setting the max input of progress to the value of pages
-const progress = document.getElementById("progress");
-const pages = document.getElementById("pages");
-
-
 
 //Create new books using user input and push it to library 
 function addBookToLibrary() {
@@ -100,6 +93,10 @@ function addBookToLibrary() {
     deleteButton.innerText += "Delete";
     deleteButton.className = ('delete-card');
     deleteButton.id = (`${bookId}`);
+    const editButton = document.createElement('button');
+    editButton.innerText += "Edit";
+    editButton.className = ('edit-card')
+    editButton.id = ("edit");
     bookTitle.innerText += `Title: ${book.title}`;
     bookAuthor.innerText += `Author: ${book.author}`;
     bookGenre.innerText += `Genre: ${book.genre}`;
@@ -114,8 +111,11 @@ function addBookToLibrary() {
     bookProgress.appendChild(progressBar);
     bookPropList.appendChild(deleteList);
     deleteList.appendChild(deleteButton);
+    deleteList.appendChild(editButton);
     const deleteElement = document.querySelectorAll(".delete-card");
+    const editProgress = document.querySelectorAll(".edit-card");
     deleteElement.forEach(del => del.addEventListener('click', deleteCard));
+    editProgress.forEach(edit => edit.addEventListener('click', openForm));
   }
   
   //Creates an array of all cards that represent books
@@ -131,8 +131,9 @@ function addBookToLibrary() {
   //Functions for closing and opening forms
 const dim = document.querySelector(".frost");
   
-function openForm() {
-  addBookForm.style.display = "block";
+function openForm(e) {
+  const openForm = document.getElementById(e.target.id);
+  openForm.style.display = "block";
   dim.style.display = "block";
 }
 
@@ -149,6 +150,12 @@ function deleteCard(e) {
   bookCards.removeChild(card);
   displayBooks();
   console.log(myLibrary);
+}
+
+function editCard(e) {
+  let editId = e.target.id;
+  const card = document.getElementById(`${editId}`);
+
 }
 
 const addBook = document.querySelector(".add-book");

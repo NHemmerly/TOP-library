@@ -48,7 +48,7 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 4px solid var(--main-font-color);
+  border: 3px solid var(--main-font-color);
   border-radius: 12px;
   padding-bottom: 7px;
   margin: 1rem;
@@ -82,16 +82,20 @@ ul {
   flex-direction: column;
 }
 
-.delete-card {
+.delete-card, .edit-card {
   background-color: var(--navbar-bg);
   width: 100px;
+  margin-right: 3rem;
   border: 2px solid var(--main-font-color);
   border-radius: 12px;
 }
 
-
 .delete-card:hover {
   background-color: var(--btn-cancel);
+}
+
+.edit-card:hover {
+  background-color: var(--btn-submit);
 }
 
 ul > li {
@@ -112,7 +116,7 @@ li:last-child {
 }
 
 progress {
-  width: 90%;
+  width: 83%;
 }
 
 progress[value]::-webkit-progress-bar {
@@ -126,7 +130,7 @@ progress::-webkit-progress-value {
 
 /* Pop-up form */
 
-.add-book-form {
+.add-book-form, .edit-form-div {
   display: none;
   position: fixed;
   top: 50%;
@@ -138,7 +142,7 @@ progress::-webkit-progress-value {
   z-index: 2;
 }
 
-.add-book-container {
+.add-book-container, .edit-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -197,4 +201,14 @@ input {
 
 input[id="progress"] {
   display: hidden;
+}
+
+/* Update Progress Form */
+.edit-form-div {
+  height: 200px;
+}
+
+.edit-form {
+  align-items: center;
+  height: 100px;
 }
