@@ -37,6 +37,12 @@ h3 {
   padding: 1rem;
 }
 
+/*Element settings */
+button,
+input {
+  box-shadow: 5px 5px 5px rgba(0,0,0,.2);
+}
+
 /* Navbar settings */
 
 #navigation {
@@ -44,6 +50,8 @@ h3 {
   color: var(--content-bg);
   height: 100px;
   padding: 0;
+  box-shadow: 0px 10px 5px rgba(0,0,0,.1);
+  text-shadow: 5px 5px 5px rgba(0,0,0,.3);;
 }
 
 .add-book {
@@ -59,6 +67,7 @@ h3 {
   font-size: 32px;
   font-weight: 800;
   background-color: var(--form-color-bg);
+  box-shadow: 5px 5px 5px rgba(0,0,0,.2);
 }
 
 .add-book:hover {
@@ -70,6 +79,7 @@ h3 {
 .card {
   width: 400px;
   padding: 30px 10px 30px 10px;
+  box-shadow: 10px 10px 5px rgba(0,0,0,.1);
 }
 
 .cards {
@@ -194,6 +204,14 @@ button[type="cancel"] {
 
 input {
   width: 350px;
+  border: 1px solid var(--main-font-color );
+  border-radius: 12px;
+  padding-left: 15px;
+}
+
+input:focus {
+  background-color: #eee;
+  box-shadow: 5px 5px 5px rgba(253, 186, 116, .5);
 }
 
 .frost {
@@ -203,10 +221,6 @@ input {
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.5);
-}
-
-input[id="progress"] {
-  display: hidden;
 }
 
 /* Update Progress Form */
