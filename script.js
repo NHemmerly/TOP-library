@@ -1,8 +1,7 @@
 // Javascript for TOP-library
 
-const addBookForm = document.querySelector(".add-book-form");
+
 const form = document.querySelector(".add-book-container");
-const cancelBookForm = document.querySelectorAll(".btn-cancel");
 const submitBookForm = document.getElementById("submit");
 const formInformation = document.querySelectorAll(".new-book");
 const bookCards = document.querySelector(".cards");
@@ -113,7 +112,7 @@ function addBookToLibrary() {
     const deleteElement = document.querySelectorAll(".delete-card");
     const editProgress = document.querySelectorAll(".edit-card");
     deleteElement.forEach(del => del.addEventListener('click', deleteCard));
-    editProgress.forEach(edit => edit.addEventListener('click', openForm));
+    editProgress.forEach(edit => edit.addEventListener('click', openEditForm));
   }
   
   //Creates an array of all cards that represent books
@@ -129,21 +128,32 @@ function addBookToLibrary() {
   
   //Functions for closing and opening forms
 const dim = document.querySelector(".frost");
-  
-function openForm(e) {
-  const openForm = document.getElementById(e.target.id);
+
+//Create separate function for opening different forms
+function openAddForm() {
+  const openForm = document.getElementById('add');
   openForm.style.display = "block";
   dim.style.display = "block";
 }
 
-function closeForm(e) {
-  const closeForm = document.getElementById(e.target.id);
+function openEditForm() {
+  const openForm = document.getElementById('edit');
+  openForm.style.display = "block";
+  dim.style.display = "block";
+
+}
+
+//Functions for closing either form
+const cancelBookForm = document.getElementById("edit-cancel");
+function closeForm() {
+  const closeForm = document.getElementById('edit');
   closeForm.style.display = "none";
   dim.style.display = "none";
   form.reset();
 }
 
 function closeAddForm(){
+  const addBookForm = document.querySelector(".add-book-form");
   addBookForm.style.display = "none";
   dim.style.display = "none";
   form.reset();
@@ -165,7 +175,7 @@ function editCard(e) {
 }
 
 const addBook = document.querySelector(".add-book");
-addBook.addEventListener("click", openForm);
-cancelBookForm.forEach(btn => btn.addEventListener("click", closeForm));
+addBook.addEventListener("click", openAddForm);
+cancelBookForm.addEventListener("click", closeForm);
 submitBookForm.addEventListener("click", validateForm);
 

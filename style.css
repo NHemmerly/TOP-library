@@ -172,6 +172,7 @@ progress::-webkit-progress-value {
 
 .form-btn > button {
   border: 2px solid var(--main-font-color);
+  border-radius: 12px;
 }
 
 .form-btn > button:hover {
