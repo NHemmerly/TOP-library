@@ -57,6 +57,7 @@ function addBookToLibrary() {
     if (genre === '') {
       genre = 'N/A';
     }
+
     
     const newBook = new Book(title, author, pages, genre, progress);
     newBook.prototype = Object.create(Book.prototype);
@@ -69,6 +70,7 @@ function addBookToLibrary() {
   
 //Creates DOM element for each new book 
 function createBookElement(book, bookId) {
+  let completed = determineCompletion(book);
   const newBookCard = document.createElement('div');
   const bookPropList = document.createElement('ul');
   newBookCard.className = ('card');
@@ -95,7 +97,7 @@ function createBookElement(book, bookId) {
   editButton.innerText += "Edit";
   editButton.className = ('edit-card')
   editButton.id = ("edit");
-  if (determineCompletion(book)) {
+  if (completed) {
     completedText.className = ('book-complete');
     completedText.innerText = "Completed!";
   } else {
@@ -115,7 +117,7 @@ function createBookElement(book, bookId) {
   bookPropList.appendChild(bookPages);
   bookPropList.appendChild(bookGenre);
   bookPropList.appendChild(bookProgress);
-  if (determineCompletion(book)) {
+  if (completed) {
     bookProgress.appendChild(completedText);
   } else {
     bookProgress.appendChild(progressLabel);
@@ -132,8 +134,10 @@ function createBookElement(book, bookId) {
 
 function determineCompletion(book) {
   if (book.pages === book.progress) {
+    book.completed = true;
     return true;
   } else {
+    book.completed = false;
     return false;
   }
 }
