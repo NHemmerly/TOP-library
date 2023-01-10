@@ -219,7 +219,5 @@ function updateCard (e) {
   }
 }
 
-
-
 submitBookForm.addEventListener("click", validateForm);
 

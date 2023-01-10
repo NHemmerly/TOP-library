@@ -27,7 +27,9 @@ body,
 
 /* Font Settings */
 
-li, button, h1 {
+li,
+button,
+h1 {
   font-weight: 600;
 }
 
@@ -82,7 +84,8 @@ ul {
   flex-direction: column;
 }
 
-.delete-card, .edit-card {
+.delete-card,
+.edit-card {
   background-color: var(--navbar-bg);
   width: 100px;
   margin-right: 3rem;
@@ -130,7 +133,8 @@ progress::-webkit-progress-value {
 
 /* Pop-up form */
 
-.add-book-form, .edit-form-div {
+.add-book-form,
+.edit-form-div {
   display: none;
   position: fixed;
   top: 50%;
@@ -142,7 +146,8 @@ progress::-webkit-progress-value {
   z-index: 2;
 }
 
-.add-book-container, .edit-form {
+.add-book-container,
+.edit-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -220,7 +225,7 @@ input[id="progress"] {
   padding: 1rem;
 }
 
-/* Completed */ 
+/* Completed */
 
 .book-complete {
   margin-bottom: 0;
