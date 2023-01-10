@@ -79,22 +79,32 @@ function createBookElement(book, bookId) {
   const bookAuthor = document.createElement('li');
   const bookGenre = document.createElement('li');
   const bookPages = document.createElement('li');
+  //Progress
+  const completedText = document.createElement('h4');
   const bookProgress = document.createElement('li');
   const progressBar = document.createElement('progress')
-  progressBar.className = 'progress-bar';
-  progressBar.setAttribute("value", parseInt(book.progress));
-  progressBar.setAttribute("max", parseInt(book.pages));
   const progressLabel = document.createElement('label');
-  progressLabel.innerText += `Progress: ${book.progress} / ${book.pages}`;
+  //Delete Button
   const deleteList = document.createElement('li');
   const deleteButton = document.createElement('button');
   deleteButton.innerText += "Delete";
   deleteButton.className = ('delete-card');
   deleteButton.id = (`${bookId}`);
+  //Edit Button
   const editButton = document.createElement('button');
   editButton.innerText += "Edit";
   editButton.className = ('edit-card')
   editButton.id = ("edit");
+  if (determineCompletion(book)) {
+    completedText.className = ('book-complete');
+    completedText.innerText = "Completed!";
+  } else {
+    progressBar.className = 'progress-bar';
+    progressBar.setAttribute("value", parseInt(book.progress));
+    progressBar.setAttribute("max", parseInt(book.pages));
+    progressLabel.innerText += `Progress: ${book.progress} / ${book.pages}`;
+  }
+
   bookTitle.innerText += `Title: ${book.title}`;
   bookAuthor.innerText += `Author: ${book.author}`;
   bookGenre.innerText += `Genre: ${book.genre}`;
@@ -105,8 +115,12 @@ function createBookElement(book, bookId) {
   bookPropList.appendChild(bookPages);
   bookPropList.appendChild(bookGenre);
   bookPropList.appendChild(bookProgress);
-  bookProgress.appendChild(progressLabel);
-  bookProgress.appendChild(progressBar);
+  if (determineCompletion(book)) {
+    bookProgress.appendChild(completedText);
+  } else {
+    bookProgress.appendChild(progressLabel);
+    bookProgress.appendChild(progressBar);
+  }
   bookPropList.appendChild(deleteList);
   deleteList.appendChild(deleteButton);
   deleteList.appendChild(editButton);
@@ -114,6 +128,14 @@ function createBookElement(book, bookId) {
   const editProgress = document.querySelectorAll(".edit-card");
   deleteElement.forEach(del => del.addEventListener('click', deleteCard));
   editProgress.forEach(edit => edit.addEventListener('click', openEditForm));
+}
+
+function determineCompletion(book) {
+  if (book.pages === book.progress) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 //Creates an array of all cards that represent books
