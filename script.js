@@ -8,6 +8,7 @@ const bookCards = document.querySelector(".cards");
 
 const progress = document.getElementById("progress");
 const pages = document.getElementById("pages");
+let updateId = null;
 
 let myLibrary = [];
 
@@ -66,78 +67,82 @@ function addBookToLibrary() {
     displayBooks();
   }
   
-  //Creates DOM element for each new book 
-  function createBookElement(book, bookId) {
-    const newBookCard = document.createElement('div');
-    const bookPropList = document.createElement('ul');
-    newBookCard.className = ('card');
-    newBookCard.id = (`${bookId}`);
-    bookCards.appendChild(newBookCard);
-    newBookCard.appendChild(bookPropList);
-    const bookTitle = document.createElement('li');
-    const bookAuthor = document.createElement('li');
-    const bookGenre = document.createElement('li');
-    const bookPages = document.createElement('li');
-    const bookProgress = document.createElement('li');
-    const progressBar = document.createElement('progress')
-    progressBar.className = 'progress-bar';
-    progressBar.setAttribute("value", parseInt(book.progress));
-    progressBar.setAttribute("max", parseInt(book.pages));
-    const progressLabel = document.createElement('label');
-    progressLabel.innerText += `Progress: ${book.progress} / ${book.pages}`;
-    const deleteList = document.createElement('li');
-    const deleteButton = document.createElement('button');
-    deleteButton.innerText += "Delete";
-    deleteButton.className = ('delete-card');
-    deleteButton.id = (`${bookId}`);
-    const editButton = document.createElement('button');
-    editButton.innerText += "Edit";
-    editButton.className = ('edit-card')
-    editButton.id = ("edit");
-    bookTitle.innerText += `Title: ${book.title}`;
-    bookAuthor.innerText += `Author: ${book.author}`;
-    bookGenre.innerText += `Genre: ${book.genre}`;
-    bookPages.innerText += `Pages: ${book.pages}`;
-    
-    bookPropList.appendChild(bookTitle);
-    bookPropList.appendChild(bookAuthor);
-    bookPropList.appendChild(bookPages);
-    bookPropList.appendChild(bookGenre);
-    bookPropList.appendChild(bookProgress);
-    bookProgress.appendChild(progressLabel);
-    bookProgress.appendChild(progressBar);
-    bookPropList.appendChild(deleteList);
-    deleteList.appendChild(deleteButton);
-    deleteList.appendChild(editButton);
-    const deleteElement = document.querySelectorAll(".delete-card");
-    const editProgress = document.querySelectorAll(".edit-card");
-    deleteElement.forEach(del => del.addEventListener('click', deleteCard));
-    editProgress.forEach(edit => edit.addEventListener('click', openEditForm));
+//Creates DOM element for each new book 
+function createBookElement(book, bookId) {
+  const newBookCard = document.createElement('div');
+  const bookPropList = document.createElement('ul');
+  newBookCard.className = ('card');
+  newBookCard.id = (`${bookId}`);
+  bookCards.appendChild(newBookCard);
+  newBookCard.appendChild(bookPropList);
+  const bookTitle = document.createElement('li');
+  const bookAuthor = document.createElement('li');
+  const bookGenre = document.createElement('li');
+  const bookPages = document.createElement('li');
+  const bookProgress = document.createElement('li');
+  const progressBar = document.createElement('progress')
+  progressBar.className = 'progress-bar';
+  progressBar.setAttribute("value", parseInt(book.progress));
+  progressBar.setAttribute("max", parseInt(book.pages));
+  const progressLabel = document.createElement('label');
+  progressLabel.innerText += `Progress: ${book.progress} / ${book.pages}`;
+  const deleteList = document.createElement('li');
+  const deleteButton = document.createElement('button');
+  deleteButton.innerText += "Delete";
+  deleteButton.className = ('delete-card');
+  deleteButton.id = (`${bookId}`);
+  const editButton = document.createElement('button');
+  editButton.innerText += "Edit";
+  editButton.className = ('edit-card')
+  editButton.id = ("edit");
+  bookTitle.innerText += `Title: ${book.title}`;
+  bookAuthor.innerText += `Author: ${book.author}`;
+  bookGenre.innerText += `Genre: ${book.genre}`;
+  bookPages.innerText += `Pages: ${book.pages}`;
+  
+  bookPropList.appendChild(bookTitle);
+  bookPropList.appendChild(bookAuthor);
+  bookPropList.appendChild(bookPages);
+  bookPropList.appendChild(bookGenre);
+  bookPropList.appendChild(bookProgress);
+  bookProgress.appendChild(progressLabel);
+  bookProgress.appendChild(progressBar);
+  bookPropList.appendChild(deleteList);
+  deleteList.appendChild(deleteButton);
+  deleteList.appendChild(editButton);
+  const deleteElement = document.querySelectorAll(".delete-card");
+  const editProgress = document.querySelectorAll(".edit-card");
+  deleteElement.forEach(del => del.addEventListener('click', deleteCard));
+  editProgress.forEach(edit => edit.addEventListener('click', openEditForm));
+}
+
+//Creates an array of all cards that represent books
+
+function displayBooks () {
+  bookCards.replaceChildren();
+  for (const book of myLibrary){
+    book.id = myLibrary.indexOf(book);
+    createBookElement(book, book.id);
   }
-  
-  //Creates an array of all cards that represent books
-  
-  function displayBooks () {
-    bookCards.replaceChildren();
-    for (const book of myLibrary){
-      book.id = myLibrary.indexOf(book);
-      createBookElement(book, book.id);
-    }
-    closeAddForm();
-  }
-  
-  //Functions for closing and opening forms
+  closeAddForm();
+}
+
+//Functions for closing and opening forms
 const dim = document.querySelector(".frost");
 
 //Create separate function for opening different forms
+const addBook = document.querySelector(".add-book");
+addBook.addEventListener("click", openAddForm);
+
 function openAddForm() {
-  const openForm = document.getElementById('add');
+  const openForm = document.querySelector('.add-book-form');
   openForm.style.display = "block";
   dim.style.display = "block";
 }
 
-function openEditForm() {
+function openEditForm(e) {
   const openForm = document.getElementById('edit');
+  updateId = e.target.previousElementSibling.id;
   openForm.style.display = "block";
   dim.style.display = "block";
 
@@ -145,12 +150,18 @@ function openEditForm() {
 
 //Functions for closing either form
 const cancelBookForm = document.getElementById("edit-cancel");
+cancelBookForm.addEventListener("click", closeForm);
+
 function closeForm() {
   const closeForm = document.getElementById('edit');
+  const resetForm = document.querySelector('.edit-form');
   closeForm.style.display = "none";
   dim.style.display = "none";
-  form.reset();
+  updateId = null;
+  resetForm.reset();
 }
+const cancelAddForm = document.getElementById('add');
+cancelAddForm.addEventListener('click', closeAddForm);
 
 function closeAddForm(){
   const addBookForm = document.querySelector(".add-book-form");
@@ -159,6 +170,7 @@ function closeAddForm(){
   form.reset();
 }
 
+//Function that deletes books from myLibrary and cards
 function deleteCard(e) {
   let deleteId = e.target.id;
   const card = document.getElementById(`${deleteId}`);
@@ -168,14 +180,20 @@ function deleteCard(e) {
   console.log(myLibrary);
 }
 
-function editCard(e) {
-  let editId = e.target.id;
-  const card = document.getElementById(`${editId}`);
-
+//Function for updating page progress of a book
+const submitEdit = document.getElementById('update');
+submitEdit.addEventListener('click', updateCard);
+function updateCard (e) {
+  const newProgress = document.getElementById('new-progress');
+  if (newProgress.value <= myLibrary[updateId].pages) {
+    e.preventDefault();
+    myLibrary[updateId].progress = newProgress.value;
+    displayBooks();
+    closeForm();
+  }
 }
 
-const addBook = document.querySelector(".add-book");
-addBook.addEventListener("click", openAddForm);
-cancelBookForm.addEventListener("click", closeForm);
+
+
 submitBookForm.addEventListener("click", validateForm);
 
