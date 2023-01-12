@@ -1,19 +1,18 @@
+/* eslint-disable no-unused-vars */
 // Revised, Modularized js for TOP-library
 
 const Library = (function () {
-  'use strict'
 
   let myLibrary = [];
-
-  const Book = (title, author, genre, pages, progress) => {
-      return { title, author, genre, pages, progress};
-  };
 
   const bookCards = document.querySelector(".cards");
   const formInformation = document.querySelectorAll(".new-book");
   const progress = document.getElementById("progress");
   const pages = document.getElementById("pages");
   const submitBookForm = document.getElementById("submit");
+  const dim = document.querySelector(".frost");
+  const form = document.querySelector(".add-book-container");
+  let updateId = null;
 
   submitBookForm.addEventListener("click", _validateForm);
 
@@ -32,8 +31,6 @@ const Library = (function () {
       e.preventDefault();
       _addBookToLibrary();
     }
-
-    
   }
 
   function _addBookToLibrary() {
@@ -70,63 +67,61 @@ const Library = (function () {
     _closeAddForm();
   }
 
+  function deleteCard(e) {
+    let deleteId = e.target.id;
+    const card = document.getElementById(`${deleteId}`);
+    myLibrary.splice(deleteId, 1);
+    bookCards.removeChild(card);
+    _displayBooks();
+    console.log(myLibrary);
+  }
+
+  function openEditForm(e) {
+    const openForm = document.getElementById('edit');
+    updateId = e.target.previousElementSibling.id;
+    openForm.style.display = "block";
+    dim.style.display = "block";
+  
+  }
+  const addBook = document.querySelector(".add-book");
+  addBook.addEventListener("click", openAddForm);
+
+  function openAddForm() {
+    const openForm = document.querySelector('.add-book-form');
+    openForm.style.display = "block";
+    dim.style.display = "block";
+  }
+
+  function _closeAddForm(){
+    const addBookForm = document.querySelector(".add-book-form");
+    addBookForm.style.display = "none";
+    dim.style.display = "none";
+    form.reset();
+  }
+
   function _createBookElement(book, bookId) {
     let completed = _determineCompletion(book);
-    const newBookCard = document.createElement('div');
-    const bookPropList = document.createElement('ul');
-    newBookCard.className = ('card');
-    newBookCard.id = (`${bookId}`);
-    bookCards.appendChild(newBookCard);
-    newBookCard.appendChild(bookPropList);
-    const bookTitle = document.createElement('li');
-    const bookAuthor = document.createElement('li');
-    const bookGenre = document.createElement('li');
-    const bookPages = document.createElement('li');
+    const newBookCard = elementFactory('div', bookCards, '', 'card', bookId);
+    const bookPropList = elementFactory('ul', newBookCard, '', '', '');
+    const bookTitle = elementFactory('li', bookPropList, `Title: ${book.title}`, '', '');
+    const bookAuthor = elementFactory('li', bookPropList, `Author: ${book.author}`, '', '');
+    const bookGenre = elementFactory('li', bookPropList, `Genre: ${book.genre}`, '', '');
+    const bookPages = elementFactory('li', bookPropList, `Pages: ${book.pages}`, '', '');
     //Progress
-    const completedText = document.createElement('h4');
-    const bookProgress = document.createElement('li');
-    const progressBar = document.createElement('progress')
-    const progressLabel = document.createElement('label');
+    const bookProgress = elementFactory('li', bookPropList, '', '', '');
     //Delete Button
-    const deleteList = document.createElement('li');
-    const deleteButton = document.createElement('button');
-    deleteButton.innerText += "Delete";
-    deleteButton.className = ('delete-card');
-    deleteButton.id = (`${bookId}`);
+    const deleteList = elementFactory('li', bookPropList, '', '', '');
+    const deleteButton = elementFactory('li', deleteList, 'Delete', 'delete-card', bookId);
     //Edit Button
-    const editButton = document.createElement('button');
-    editButton.innerText += "Edit";
-    editButton.className = ('edit-card')
-    editButton.id = ("edit");
+    const editButton = elementFactory('button', deleteList, 'Edit', 'edit-card', 'edit');
     if (completed) {
-      completedText.className = ('book-complete');
-      completedText.innerText = "Completed!";
+      const completedText = elementFactory('h4', bookProgress, 'Completed!', 'book-complete', '');
     } else {
-      progressBar.className = 'progress-bar';
+      const progressBar = elementFactory('progress', bookProgress, '', 'progress-bar', '');
+      const progressLabel = elementFactory('label', bookProgress, `Progress: ${book.progress} / ${book.pages}`, '', '');
       progressBar.setAttribute("value", parseInt(book.progress));
       progressBar.setAttribute("max", parseInt(book.pages));
-      progressLabel.innerText += `Progress: ${book.progress} / ${book.pages}`;
     }
-  
-    bookTitle.innerText += `Title: ${book.title}`;
-    bookAuthor.innerText += `Author: ${book.author}`;
-    bookGenre.innerText += `Genre: ${book.genre}`;
-    bookPages.innerText += `Pages: ${book.pages}`;
-    
-    bookPropList.appendChild(bookTitle);
-    bookPropList.appendChild(bookAuthor);
-    bookPropList.appendChild(bookPages);
-    bookPropList.appendChild(bookGenre);
-    bookPropList.appendChild(bookProgress);
-    if (completed) {
-      bookProgress.appendChild(completedText);
-    } else {
-      bookProgress.appendChild(progressLabel);
-      bookProgress.appendChild(progressBar);
-    }
-    bookPropList.appendChild(deleteList);
-    deleteList.appendChild(deleteButton);
-    deleteList.appendChild(editButton);
     const deleteElement = document.querySelectorAll(".delete-card");
     const editProgress = document.querySelectorAll(".edit-card");
     deleteElement.forEach(del => del.addEventListener('click', deleteCard));
@@ -143,4 +138,26 @@ const Library = (function () {
     }
   }
 
+  return {_createBookElement};
+
   })();
+
+const elementFactory = (type, parentName, content, className, id) => {
+  'use strict';
+  const el = document.createElement(type);
+  el.innerText = content;
+  el.className = className;
+  el.id = id;
+  parentName.appendChild(el);
+  return {
+    el,
+    setParent(parentName) {
+      parentName.appendChild(el);
+    }
+  };
+};
+
+const Book = (title, author, genre, pages, progress) => {
+    return { title, author, genre, pages, progress};
+};
+
